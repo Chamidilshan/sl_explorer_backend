@@ -1,4 +1,4 @@
-const OrdersModel = require("../../models/orders/orders.model");
+const Order = require("../../models/orders/orders.model");
 
 const createOrder = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ const createOrder = async (req, res) => {
     //   return res.status(400).json({ message: "Required fields are missing" });
     // }
 
-    const newOrder = new OrdersModel({
+    const newOrder = new Order({
       customerId: req.body.customerId,
       packageId: {
         roundTrip: req.body.packageId.roundTrip,
@@ -29,6 +29,7 @@ const createOrder = async (req, res) => {
         Quadruple: req.body.rooms.Quadruple,
       },
       status: req.body.status,
+      userDeviceToken: req.body.userDeviceToken,
       price: {
         shownPrice: req.body.price.shownPrice,
         exactPrice: req.body.price.exactPrice,
@@ -47,7 +48,7 @@ const createOrder = async (req, res) => {
       },
     });
 
-    const order = await OrdersModel.create(newOrder);
+    const order = await Order.create(newOrder);
 
     // Send success response
     return res.status(201).json({ message: "Order created successfully" });
@@ -68,7 +69,7 @@ const updateStatus = async (req, res) => {
     //   });
     // }
 
-    existingOrder = await OrdersModel.findById(req.body.orderId);
+    existingOrder = await Order.findById(req.body.orderId);
 
     // Checking if the document exists
     // if (!existingOrder) {
@@ -90,11 +91,37 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const updateOrder = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const { finalPrice, advancePrice, discount } = req.body;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    order.price.finalPrice = finalPrice;
+    order.advance.amount = advancePrice;
+    order.price.discount = discount;
+
+    await order.save();
+
+    return res
+      .status(200)
+      .json({ message: "Order updated successfully", order });
+  } catch (e) {
+    console.error("Error updating order:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const getOrders = async (req, res) => {
   try {
-    const resp = await OrdersModel.find()
+    const resp = await Order.find()
       .populate("packageId.roundTrip")
-      // .populate("packageId.dayTrip")
+      .populate("packageId.dayTrip") 
       .exec();
     return res.status(200).json(resp);
   } catch (error) {
@@ -105,7 +132,7 @@ const getOrders = async (req, res) => {
 
 const getOrderByCustomerId = async (req, res) => {
   try {
-    const orders = await OrdersModel.find({
+    const orders = await Order.find({
       customerId: req.params.customerId,
     })
       .populate("packageId.roundTrip")
@@ -128,4 +155,5 @@ module.exports = {
   updateStatus,
   getOrders,
   getOrderByCustomerId,
+  updateOrder,
 };
