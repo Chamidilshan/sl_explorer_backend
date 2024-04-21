@@ -4,42 +4,34 @@ const createCruiseShip = async (req, res) => {
   try {
     if (
     
-        !req.body.cruiseShipName ||
-        !req.body.cruiseShipDescription ||
-        !req.body.cruiseShipCoverImage ||
-        !req.body.cruiseShipImageLinks ||
-        !req.body.cruiseArrivalDay ||
-        !req.body.packageDays ||
         !req.body.packageName ||
         !req.body.packageShortDescription ||
-        !req.body.packageStepsDescription ||
+        !req.body.packageCoverDescription ||
         !req.body.packageCoverImage ||
         !req.body.packageImageLinks ||
         !req.body.packageTitle ||
-        !req.body.adultPrice ||
-        !req.body.childPrice ||
-        !req.body.hotels
+        !req.body.packageSubTitle ||
+        !req.body.packageTotalSeats ||
+        !req.body.itenary ||
+        !req.body.hotels ||
+        !req.body.prices 
 
     ) {
       return res.status(400).send({ message: "Request body is missing!" });
     }
 
     const newCruiseShip = {
-        cruiseShipName: req.body.cruiseShipName,
-        cruiseShipDescription: req.body.cruiseShipDescription,
-        cruiseShipCoverImage: req.body.cruiseShipCoverImage,
-        cruiseShipImageLinks: req.body.cruiseShipImageLinks,
-        cruiseArrivalDay: req.body.cruiseArrivalDay,
-        packageDays: req.body.packageDays,
         packageName: req.body.packageName,
         packageShortDescription: req.body.packageShortDescription,
-        packageStepsDescription: req.body.packageStepsDescription,
+        packageCoverDescription: req.body.packageCoverDescription,
         packageCoverImage: req.body.packageCoverImage,
         packageImageLinks: req.body.packageImageLinks,
         packageTitle: req.body.packageTitle,
-        adultPrice: req.body.adultPrice,
-        childPrice: req.body.childPrice,
+        packageSubTitle: req.body.packageSubTitle,
+        packageTotalSeats: req.body.packageTotalSeats,
+        itenary: req.body.itenary,
         hotels: req.body.hotels,
+        prices: req.body.prices,
       };
 
     const cruiseShip = await cruiseShipsModel.create(newCruiseShip);
