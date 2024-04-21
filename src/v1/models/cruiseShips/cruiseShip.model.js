@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const cruiseShipsSchema = new mongoose.Schema({
+const cruiseShipSchema = new mongoose.Schema({
     packageName : {
         type: String,
         required: true
@@ -60,4 +60,4 @@ const cruiseShipsSchema = new mongoose.Schema({
  
 }); 
  
-module.exports = mongoose.model('CruiseShips', cruiseShipsSchema);
+module.exports = mongoose.model('CruiseShips', cruiseShipSchema);
