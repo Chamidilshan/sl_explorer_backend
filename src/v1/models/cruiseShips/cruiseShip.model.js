@@ -1,7 +1,19 @@
 const mongoose = require('mongoose');
 
 const cruiseShipSchema = new mongoose.Schema({
+    shipName : {
+        type: String,
+        required: true
+    },
     packageName : {
+        type: String,
+        required: true
+    },
+    packageCategoryName : {
+        type: String,
+        required: true
+    },
+    packageDays : {
         type: String,
         required: true
     },
@@ -40,11 +52,23 @@ const cruiseShipSchema = new mongoose.Schema({
         description : String,
         optionalDescription : String, 
     }],
+    locations: [{
+        name: String,
+        prices:Number,
+        avaliableDates: [{
+            dayName: String,
+            avaliability: Boolean,
+        }],
+    }],
     hotels: [{ 
         hotel : {type: mongoose.Schema.Types.ObjectId, ref: 'Hotels'},
         hotelRoomDesc : String,
         hotelLocationDesc : String
     }],
+    packageDate : {
+        type: String,
+        required: true
+    },
     prices : {
         group: {
             single: { type: Number, required: true },
