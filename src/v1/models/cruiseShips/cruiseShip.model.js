@@ -1,75 +1,75 @@
 const mongoose = require('mongoose');
 
 const cruiseShipSchema = new mongoose.Schema({
-    shipName : {
+    shipName: {
         type: String,
         required: true
     },
-    packageName : {
+    packageName: {
         type: String,
         required: true
     },
-    packageCategoryName : {
+    packageCategoryName: {
         type: String,
         required: true
     },
-    packageDays : {
+    packageDays: {
         type: String,
         required: true
     },
-    packageShortDescription : {
+    packageShortDescription: {
         type: String,
         required: true
     },
-    packageCoverDescription : {
+    packageCoverDescription: {
         type: String,
         required: true
     },
-    packageCoverImage : {
+    packageCoverImage: {
         type: String,
         required: true
-    },  
-    packageImageLinks : {
+    },
+    packageImageLinks: {
         type: Array,
         required: true
-    }, 
-    packageTitle : {    
+    },
+    packageTitle: {
         type: String,
         required: true
     },
-    packageSubTitle : {
+    packageSubTitle: {
         type: String,
         required: true
-    }, 
-    packageTotalSeats : {
+    },
+    packageTotalSeats: {
         type: Number,
         required: true
     },
-    itenary : [{
+    itenary: [{
         dayNumber: Number,
         dayName: String,
-        location : {type : Array},
-        description : String,
-        optionalDescription : String, 
+        location: { type: Array },
+        description: String,
+        optionalDescription: String
     }],
     locations: [{
         name: String,
-        prices:Number,
-        avaliableDates: [{
+        prices: Number,
+        availableDates: [{
             dayName: String,
-            avaliability: Boolean,
-        }],
+            availability: Boolean
+        }]
     }],
-    hotels: [{ 
-        hotel : {type: mongoose.Schema.Types.ObjectId, ref: 'Hotels'},
-        hotelRoomDesc : String,
-        hotelLocationDesc : String
+    hotels: [{
+        hotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotels' },
+        hotelRoomDesc: String,
+        hotelLocationDesc: String
     }],
-    packageDate : {
+    packageDate: {
         type: String,
         required: true
     },
-    prices : {
+    prices: {
         group: {
             single: { type: Number, required: true },
             double: { type: Number, required: true },
@@ -80,8 +80,7 @@ const cruiseShipSchema = new mongoose.Schema({
             double: { type: Number, required: true },
             triple: { type: Number, required: true }
         }
-    },
- 
-}); 
- 
+    }
+});
+
 module.exports = mongoose.model('CruiseShips', cruiseShipSchema);

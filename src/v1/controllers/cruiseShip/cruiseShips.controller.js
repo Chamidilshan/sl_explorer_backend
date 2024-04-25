@@ -53,7 +53,7 @@ const createCruiseShip = async (req, res) => {
         services: req.body.services,
         hotels: req.body.hotels,
         packageDate: req.body.packageDate,
-        prices: req.body.price,
+        prices: req.body.prices,
       };
 
     const cruiseShip = await cruiseShipsModel.create(newCruiseShip);
